@@ -8,6 +8,9 @@ import greenfoot.*;
  */
 public class Ant extends Creature
 {
+    private boolean carryingFood;
+    private GreenfootImage image1;
+    private GreenfootImage image2;
     /**
      * Create an ant with a given home hill. The initial speed is zero (not moving).
      */
@@ -22,19 +25,16 @@ public class Ant extends Creature
     public void act()
     {
         randomWalk();
-        testFoodPile(); // This currently does not do anything
+        testFoodPile(); 
     }
     
     private void testFoodPile()
     {
-    
-    /*****************************************************************
         Food food = (Food) getOneIntersectingObject(Food.class);
         if (food != null) 
         {
-            food.removeCrumb();
+            food.removeCrumbs();
         }
-    *****************************************************************/
     
     }
 }

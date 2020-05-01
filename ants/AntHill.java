@@ -22,6 +22,7 @@ public class AntHill extends Actor
      */
     public AntHill()
     {
+        
     }
 
     /**

@@ -12,7 +12,7 @@ public class AntHill extends Actor
     private int ants = 0;
     
     /** Total number of ants in this hill. */
-    private int maxAnts = 40;
+    private int maxAnts = 45;
     
     /** Counter to show how much food have been collected so far. */
     private Counter foodCounter;

@@ -1,20 +1,22 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Random;
 /**
- * Write a description of class Food here.
+ * food for ants scattered across the world
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Piper Egan 
+ * @version 4/28/20
  */
 public class Food extends Actor
 {
     private GreenfootImage image;
-    private int crumbs = 100;
+    private int crumbs = 250;
     private final int size = 30;
     
     public Food()
     {
         image = new GreenfootImage(size, size);
+        updateImage();
+        removeCrumbs();
     }
     
     /**
@@ -23,13 +25,13 @@ public class Food extends Actor
      */
     public void act() 
     {
-        removeCrumbs();
+        
     } 
     
     public void removeCrumbs()
     {
-        crumbs = 100;
         crumbs --;
+        image.clear();
         if(crumbs == 0)
         {
             getWorld().removeObject(this);
@@ -42,10 +44,8 @@ public class Food extends Actor
     
     private void updateImage()
     {
-      Random random = new Random();
-      setImage(image);
-      int num = 5;
-      for(int i = 0; i < num; i++)
+       Random random = new Random();
+       for(int i = 0; i < crumbs; i++)
        {
         int stDev = size / 6;
         int x = (int) (stDev * random.nextGaussian( ) + 3 * stDev);
@@ -67,11 +67,10 @@ public class Food extends Actor
          {
            y = size - 1;
          }
-       
-     
         Color color = new Color(200, 143, 72);  // pick the color you want by replacing r, g, b with values.
         image.setColorAt(x, y, color);
        }
+       setImage(image);
     }
     
 }

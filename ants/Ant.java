@@ -9,8 +9,16 @@ import greenfoot.*;
 public class Ant extends Creature
 {
     private boolean carryingFood = false;
+    
     private GreenfootImage image1;
     private GreenfootImage image2;
+    
+    private final int MAX_PH_AVAILABLE = 16;
+    private int phAvailable = MAX_PH_AVAILABLE;
+    
+    private final int TIME_FOLLOWING_TRIAL = 30;
+    private int followTrialTimeRemaining = 0;
+    
     
     /**
      * Create an ant with a given home hill. The initial speed is zero (not moving).
@@ -57,14 +65,24 @@ public class Ant extends Creature
     
     private void searchForFood()
     {
-        randomWalk();
+         if(followTrialTimeRemaining == 0)
+        {
+          walkTowardsPheromoneCenter();
+          randomWalk();
+        }
+         else
+        {
+          followTrialTimeRemaining--;
+          walkAwayFromHome();         
+        }
         checkForFood();
     }
     
     private void status()
     {
-        if (carryingFood == true)
+         if (carryingFood == true)
         {
+            handlePheromoneDrop();
             walkTowardsHome();
             if(atHome()) 
             {
@@ -73,9 +91,49 @@ public class Ant extends Creature
                 getHomeHill().countFood();
             }
         }
-        else
+         else
         {
             searchForFood();
         }
+    }
+    
+    private void handlePheromoneDrop()
+    {
+       if (MAX_PH_AVAILABLE == 16)
+       {
+          Pheromone ph = new Pheromone();
+          getWorld().addObject(ph, getX(), getY());
+          phAvailable = 0;
+       }
+        else
+        {
+          phAvailable++;
+        }
+    }
+    
+    private boolean smellsPheromone()
+    {
+        if(isTouching(Pheromone.class))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    private void walkTowardsPheromoneCenter()
+    {
+      Pheromone pheromone = (Pheromone) getOneIntersectingObject(Pheromone.class);  
+      if (pheromone != null)
+      {
+        headTowards(pheromone);
+          if (getX() == pheromone.getX() && getY() ==pheromone.getY())
+        {
+          followTrialTimeRemaining = TIME_FOLLOWING_TRIAL;
+        }
+      }
+      
     }
 }

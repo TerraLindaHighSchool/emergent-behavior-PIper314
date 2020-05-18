@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Pheromone here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Piper Egan) 
+ * @version (5/8/20)
  */
 public class Pheromone extends Actor
 {
@@ -15,6 +15,7 @@ public class Pheromone extends Actor
     public Pheromone()
     {
         intensity = MAX_INTENSITY;
+        updateImage();
     }
     
     /**
@@ -26,14 +27,15 @@ public class Pheromone extends Actor
         intensity--;
         if(intensity <= 0)
         {
-            // to be implemented
+            getWorld().removeObject(this);
         }
         else
         {
-             if ((intensity % 6) == 0)  // prevents updating too often
-             { 
+           if ((intensity % 6) == 0)  // prevents updating too often
+           { 
                  updateImage();
-             }
+                 
+           }
         }
     }
     
@@ -41,10 +43,13 @@ public class Pheromone extends Actor
     {
         int size = intensity / 3 + 5;
         image = new GreenfootImage(size + 1, size +1);
+        
         image.setColor(new Color(225, 225, 225, intensity / 3));
         image.fillOval(0, 0, size, size);
+        
         image.setColor(Color.GRAY);
         image.fillRect(size/2, size/2, 2, 2);
+        
         setImage(image);
     }
        
